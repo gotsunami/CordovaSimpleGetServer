@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin 
+id="com.outofpluto.cordova.simplegetserver" 
+version="0.9.0" 
+xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+xmlns:android="http://schemas.android.com/apk/res/android">
+
+<name>SimpleGetServer</name>
+<description>SimpleGetServer is an plugin with embedded web server
+into Cordova that is able to return the GET parameters to the
+app</description>
+<author>ab @ Out of Pluto</author>
+<license>MIT</license>
+<keywords>httpd,web,server,http, get</keywords>
+<repo>https://github.com/gotsunami/cordova-simplegetserver.git</repo>
+<issue>https://github.com/gotsunami/cordova-simplegetserver/issues</issue>
+
+<engines>
+    <engine name="cordova" version=">=2.9" />
+</engines>
+
+<js-module name="SimpleGetServer" src="www/SimpleGetServer.js">
+<clobbers target="cordova.plugins.SimpleGetServer" />
+</js-module>
+
+<platform name="android">
+
+<config-file parent="/*" target="res/xml/config.xml">
+<feature name="SimpleGetServer">
+<param name="android-package" value="com.outofpluto.cordova.simplegetserver.SimpleGetServer" />
+</feature>
+</config-file>
+
+<config-file target="AndroidManifest.xml" parent="/*">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+</config-file>
+
+<source-file src="src/android/SimpleGetServer.java" target-dir="src/com/rjfun/cordova/httpd" />
+<source-file src="src/android/AndroidFile.java" target-dir="src/com/rjfun/cordova/httpd" />
+<source-file src="src/android/NanoHTTPD.java" target-dir="src/com/rjfun/cordova/httpd" />
+<source-file src="src/android/WebServer.java" target-dir="src/com/rjfun/cordova/httpd" />
+
+</platform>
+
+</plugin>
