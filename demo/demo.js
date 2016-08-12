@@ -35,7 +35,10 @@ function startServer( wwwroot ) {
     	    	    'port' : 8080
     	    	}, function( url ){
 		    server.setListener(function( data ) {
-			alert("data: "+data);
+			var get = JSON.parse(data);
+			for (var key in get) {
+			    alert(key+" = "+get[key]);
+			}
 		    }, function ( error ){
 			alert("error: "+error);
 		    });

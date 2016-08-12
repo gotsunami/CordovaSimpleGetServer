@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.util.Properties;
-import java.net.URI;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
@@ -27,8 +26,16 @@ public class WebServer extends NanoHTTPD
     {
  	Response response = super.serve(uri, method, header, parms, files);
 
-	URI obj = URI.create("http://localhost"+uri);
-	PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj.getQuery());
+	String get = "{";
+ 	for (Object key : parms.keySet()) {
+ 	    String value = parms.getProperty((String) key);
+ 	    get += "\""+(String)key+"\" : \""+value+"\", ";
+ 	}
+	if (get.length() > 1) {
+	    get = get.substring(0, get.length()-2);
+	}
+	get += "}";
+	PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, get);
 	pluginResult.setKeepCallback(true);
 	callbackContext.sendPluginResult(pluginResult);
  	return response;
