@@ -15,7 +15,7 @@ But the main goal of this plugin is different, it aims at updating the app behav
 
 Add the plugin to your cordova project:
 
-    cordova plugin add https://github.com/gotsunami/simplegetserver.git
+    cordova plugin add https://github.com/gotsunami/CordovaSimpleGetServer.git
 
 Quick start, copy the demo files, and just build to play.
 
