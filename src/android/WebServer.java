@@ -25,6 +25,7 @@ public class WebServer extends NanoHTTPD
 	public Response serve( String uri, String method, Properties header, Properties parms, Properties files )
     {
  	Response response = super.serve(uri, method, header, parms, files);
+	response.addHeader("Access-Control-Allow-Origin", "*");
 
 	String get = "{";
  	for (Object key : parms.keySet()) {
