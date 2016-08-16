@@ -37,7 +37,6 @@
     </config-file>
     
     <source-file src="src/android/SimpleGetServer.java" target-dir="src/com/rjfun/cordova/httpd" />
-    <source-file src="src/android/AndroidFile.java" target-dir="src/com/rjfun/cordova/httpd" />
     <source-file src="src/android/NanoHTTPD.java" target-dir="src/com/rjfun/cordova/httpd" />
     <source-file src="src/android/WebServer.java" target-dir="src/com/rjfun/cordova/httpd" />
     

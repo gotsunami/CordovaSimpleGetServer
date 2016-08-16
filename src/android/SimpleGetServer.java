@@ -32,20 +32,16 @@ public class SimpleGetServer extends CordovaPlugin {
     private static final String ACTION_START_SERVER = "startServer";
     private static final String ACTION_STOP_SERVER = "stopServer";
     private static final String ACTION_GET_URL = "getURL";
-    private static final String ACTION_GET_LOCAL_PATH = "getLocalPath";
     private static final String ACTION_SET_LISTENER = "setListener";
     
-    private static final String OPT_WWW_ROOT = "www_root";
     private static final String OPT_PORT = "port";
     private static final String OPT_LOCALHOST_ONLY = "localhost_only";
 
-    private String www_root = "";
     private int port = 8888;
     private boolean localhost_only = false;
     
     private WebServer server = null;
     private String url = "";
-    private String localPath = "";
 
     @Override
 	public boolean execute(String action, JSONArray inputs, CallbackContext callbackContext) throws JSONException {
@@ -59,9 +55,6 @@ public class SimpleGetServer extends CordovaPlugin {
             
         } else if (ACTION_GET_URL.equals(action)) {
             result = getURL(inputs, callbackContext);
-            
-        } else if (ACTION_GET_LOCAL_PATH.equals(action)) {
-            result = getLocalPath(inputs, callbackContext);
             
         } else if (ACTION_SET_LISTENER.equals(action)) {
             result = setListener(inputs, callbackContext);
@@ -104,21 +97,8 @@ public class SimpleGetServer extends CordovaPlugin {
         JSONObject options = inputs.optJSONObject(0);
         if(options == null) return null;
         
-        www_root = options.optString(OPT_WWW_ROOT);
         port = options.optInt(OPT_PORT, 8888);
         localhost_only = options.optBoolean(OPT_LOCALHOST_ONLY, false);
-
-        if(www_root.startsWith("/")) {
-    		//localPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        	localPath = www_root;
-        } else {
-        	//localPath = "file:///android_asset/www";
-        	localPath = "www";
-        	if(www_root.length()>0) {
-        		localPath += "/";
-        		localPath += www_root;
-        	}
-        }
         
         final CallbackContext delayCallback = callbackContext;
         cordova.getActivity().runOnUiThread(new Runnable(){
@@ -144,13 +124,10 @@ public class SimpleGetServer extends CordovaPlugin {
     private String __startServer() {
     	String errmsg = "";
     	try {
-	    AndroidFile f = new AndroidFile(localPath);
-
 	    Context ctx = cordova.getActivity().getApplicationContext();
 	    AssetManager am = ctx.getResources().getAssets();
 
-	    f.setAssetManager( am );
-	    server = new WebServer(port, f);
+	    server = new WebServer(port);
 	} catch (IOException e) {
 	    errmsg = String.format("IO Exception: %s", e.getMessage());
 	    Log.w(LOGTAG, errmsg);
@@ -181,13 +158,6 @@ public class SimpleGetServer extends CordovaPlugin {
 	Log.w(LOGTAG, "getURL");
 
     	callbackContext.success( this.url );
-        return null;
-    }
-
-    private PluginResult getLocalPath(JSONArray inputs, CallbackContext callbackContext) {
-	Log.w(LOGTAG, "getLocalPath");
-	
-    	callbackContext.success( this.localPath );
         return null;
     }
 

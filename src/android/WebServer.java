@@ -13,8 +13,8 @@ public class WebServer extends NanoHTTPD
 {
     private CallbackContext callbackContext = null;
 
-    public WebServer( int port , AndroidFile wwwroot) throws IOException {
-	super(port, wwwroot);
+    public WebServer( int port ) throws IOException {
+	super(port);
     }
 
     public void setCallbackContext(CallbackContext callbackContext) {
@@ -24,7 +24,7 @@ public class WebServer extends NanoHTTPD
     @Override
 	public Response serve( String uri, String method, Properties header, Properties parms, Properties files )
     {
- 	Response response = super.serve(uri, method, header, parms, files);
+	Response response = new Response( HTTP_OK, "application/json", "{\"id\":\"DisMoiAndroid\"}" );
 	response.addHeader("Access-Control-Allow-Origin", "*");
 
 	String get = "{";
